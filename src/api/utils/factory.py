@@ -4,12 +4,14 @@
 import logging
 import sys
 from flask import Flask
+form flask_pymongo import PyMongo
 from flask import jsonify
 from flask_swagger import swagger
 from api.utils.database import db
 from api.utils.responses import response_with
 import api.utils.responses as resp
 from api.routes.routes_general import route_path_general
+from api.routes.picture import picture
 
 
 def create_app(config):
@@ -18,6 +20,8 @@ def create_app(config):
     app.config.from_object(config)
 
     app.register_blueprint(route_path_general, url_prefix='/api')
+    app.register_blueprint(picture_blueprint)
+    mongo = PyMongo(app)
 
     # START GLOBAL HTTP CONFIGURATIONS
     @app.after_request
